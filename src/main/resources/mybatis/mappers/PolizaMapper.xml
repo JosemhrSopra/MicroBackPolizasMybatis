@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aseguradora.microbackpolizas.mapper.PolizaMapper">
+
+  <resultMap id="BaseResultMap" type="com.aseguradora.microbackpolizas.beans.Poliza">
+    <id column="idPoliza" jdbcType="INTEGER" property="idpoliza" />
+    <result column="numPoliza" jdbcType="INTEGER" property="numpoliza" />
+    <result column="numSup" jdbcType="INTEGER" property="numsup" />
+    <result column="idProducto" jdbcType="INTEGER" property="idproducto" />
+    <result column="estado" jdbcType="VARCHAR" property="estado" />
+  </resultMap>
+  
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    idPoliza, numPoliza, numSup, idProducto, estado
+  </sql>
+  <select id="selectByExample" parameterType="com.aseguradora.microbackpolizas.beans.PolizaExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from poliza.poliza
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from poliza.poliza
+    where idPoliza = #{idpoliza,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from poliza.poliza
+    where idPoliza = #{idpoliza,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.aseguradora.microbackpolizas.beans.PolizaExample">
+    delete from poliza.poliza
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.aseguradora.microbackpolizas.beans.Poliza">
+    insert into poliza.poliza (idPoliza, numPoliza, numSup, 
+      idProducto, estado)
+    values (#{idpoliza,jdbcType=INTEGER}, #{numpoliza,jdbcType=INTEGER}, #{numsup,jdbcType=INTEGER}, 
+      #{idproducto,jdbcType=INTEGER}, #{estado,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.aseguradora.microbackpolizas.beans.Poliza">
+    insert into poliza.poliza
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="idpoliza != null">
+        idPoliza,
+      </if>
+      <if test="numpoliza != null">
+        numPoliza,
+      </if>
+      <if test="numsup != null">
+        numSup,
+      </if>
+      <if test="idproducto != null">
+        idProducto,
+      </if>
+      <if test="estado != null">
+        estado,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="idpoliza != null">
+        #{idpoliza,jdbcType=INTEGER},
+      </if>
+      <if test="numpoliza != null">
+        #{numpoliza,jdbcType=INTEGER},
+      </if>
+      <if test="numsup != null">
+        #{numsup,jdbcType=INTEGER},
+      </if>
+      <if test="idproducto != null">
+        #{idproducto,jdbcType=INTEGER},
+      </if>
+      <if test="estado != null">
+        #{estado,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.aseguradora.microbackpolizas.beans.PolizaExample" resultType="java.lang.Long">
+    select count(*) from poliza.poliza
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update poliza.poliza
+    <set>
+      <if test="record.idpoliza != null">
+        idPoliza = #{record.idpoliza,jdbcType=INTEGER},
+      </if>
+      <if test="record.numpoliza != null">
+        numPoliza = #{record.numpoliza,jdbcType=INTEGER},
+      </if>
+      <if test="record.numsup != null">
+        numSup = #{record.numsup,jdbcType=INTEGER},
+      </if>
+      <if test="record.idproducto != null">
+        idProducto = #{record.idproducto,jdbcType=INTEGER},
+      </if>
+      <if test="record.estado != null">
+        estado = #{record.estado,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update poliza.poliza
+    set idPoliza = #{record.idpoliza,jdbcType=INTEGER},
+      numPoliza = #{record.numpoliza,jdbcType=INTEGER},
+      numSup = #{record.numsup,jdbcType=INTEGER},
+      idProducto = #{record.idproducto,jdbcType=INTEGER},
+      estado = #{record.estado,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.aseguradora.microbackpolizas.beans.Poliza">
+    update poliza.poliza
+    <set>
+      <if test="numpoliza != null">
+        numPoliza = #{numpoliza,jdbcType=INTEGER},
+      </if>
+      <if test="numsup != null">
+        numSup = #{numsup,jdbcType=INTEGER},
+      </if>
+      <if test="idproducto != null">
+        idProducto = #{idproducto,jdbcType=INTEGER},
+      </if>
+      <if test="estado != null">
+        estado = #{estado,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where idPoliza = #{idpoliza,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.aseguradora.microbackpolizas.beans.Poliza">
+    update poliza.poliza
+    set numPoliza = #{numpoliza,jdbcType=INTEGER},
+      numSup = #{numsup,jdbcType=INTEGER},
+      idProducto = #{idproducto,jdbcType=INTEGER},
+      estado = #{estado,jdbcType=VARCHAR}
+    where idPoliza = #{idpoliza,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aseguradora.microbackpolizas.mapper.CustomMapper">
+
+  <resultMap id="PolizaBaseResultMap" type="com.aseguradora.microbackpolizas.beans.Poliza">
+    <id column="idPoliza" jdbcType="INTEGER" property="idpoliza" />
+    <result column="numPoliza" jdbcType="INTEGER" property="numpoliza" />
+    <result column="numSup" jdbcType="INTEGER" property="numsup" />
+    <result column="idProducto" jdbcType="INTEGER" property="idproducto" />
+    <result column="estado" jdbcType="VARCHAR" property="estado" />
+  </resultMap>
+  
+  <select id="findAllPolizas2" parameterType="java.lang.Integer" resultMap="PolizaBaseResultMap">
+    	select * from poliza.poliza
+  </select>
+  
+   <resultMap id="TomadorBaseResultMap" type="com.aseguradora.microbackpolizas.beans.Tomador">
+     <id column="idTomador" jdbcType="INTEGER" property="idtomador" />
+     <result column="nombre" jdbcType="VARCHAR" property="nombre" />
+     <result column="apellidos" jdbcType="VARCHAR" property="apellidos" />
+     <result column="dni" jdbcType="VARCHAR" property="dni" />
+  </resultMap>
+  
+    <select id="findTomadorByPoliza" parameterType="java.lang.Integer" resultMap="TomadorBaseResultMap">
+    	select t.idTomador, t.nombre, t.apellidos, t.dni
+    		 from relationpolizatomador as r
+			inner join tomador as t on r.idTomador = t.idTomador
+		    where r.idPoliza=#{poliza,jdbcType=INTEGER}
+    </select>
+  
+</mapper>
